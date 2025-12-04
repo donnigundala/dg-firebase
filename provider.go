@@ -2,7 +2,6 @@ package firebase
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/donnigundala/dg-core/contracts/foundation"
 )
@@ -52,10 +51,7 @@ func (p *FirebaseServiceProvider) Register(app foundation.Application) error {
 
 // Boot boots the Firebase service provider.
 func (p *FirebaseServiceProvider) Boot(app foundation.Application) error {
-	// Verify connection by resolving the client
-	_, err := app.Make("firebase")
-	if err != nil {
-		return fmt.Errorf("failed to boot firebase provider: %w", err)
-	}
+	// Firebase will be resolved when needed
+	// No need to verify resolution here to avoid deadlock
 	return nil
 }
