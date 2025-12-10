@@ -18,7 +18,7 @@ func (p *FirebaseServiceProvider) Name() string {
 
 // Version returns the version of the plugin.
 func (p *FirebaseServiceProvider) Version() string {
-	return "1.0.0"
+	return "1.1.0"
 }
 
 // Dependencies returns the list of dependencies.
@@ -42,9 +42,14 @@ func (p *FirebaseServiceProvider) Register(app foundation.Application) error {
 	// So auto-injection IS called.
 
 	// Register the client as a singleton
-	app.Singleton("firebase", func() (interface{}, error) {
-		return NewClient(context.Background(), p.Config)
-	})
+	// Create client eagerly
+	client, err := NewClient(context.Background(), p.Config)
+	if err != nil {
+		return err
+	}
+
+	// Register the client instance
+	app.Instance("firebase", client)
 
 	return nil
 }
