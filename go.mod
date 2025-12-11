@@ -1,4 +1,4 @@
-module github.com/donnigundala/dg-framework/dg-firebase
+module github.com/donnigundala/dg-firebase
 
 go 1.25.0
 

@@ -8,7 +8,7 @@ import (
 	firebase "firebase.google.com/go/v4"
 	"firebase.google.com/go/v4/auth"
 	"firebase.google.com/go/v4/storage"
-	"github.com/donnigundala/dg-framework/dg-firebase/fcm"
+	"github.com/donnigundala/dg-firebase/fcm"
 	"google.golang.org/api/option"
 )
 

@@ -5,7 +5,7 @@ Firebase integration for the DG Framework.
 ## Installation
 
 ```bash
-go get github.com/donnigundala/dg-framework/dg-firebase
+go get github.com/donnigundala/dg-firebase
 ```
 
 ## Configuration
@@ -36,7 +36,7 @@ Register the provider in your application:
 
 ```go
 import (
-    "github.com/donnigundala/dg-framework/dg-firebase"
+    "github.com/donnigundala/dg-firebase"
 )
 
 func main() {
@@ -53,8 +53,8 @@ Access the client:
 
 ```go
 import (
-    "github.com/donnigundala/dg-framework/dg-firebase"
-    "github.com/donnigundala/dg-framework/dg-firebase/fcm"
+    "github.com/donnigundala/dg-firebase"
+    "github.com/donnigundala/dg-firebase/fcm"
 )
 
 client, err := app.Make("firebase")
