@@ -13,7 +13,7 @@ func TestFirebaseServiceProvider_Name(t *testing.T) {
 
 func TestFirebaseServiceProvider_Version(t *testing.T) {
 	provider := &FirebaseServiceProvider{}
-	assert.Equal(t, "1.0.0", provider.Version())
+	assert.Equal(t, "1.1.0", provider.Version())
 }
 
 func TestFirebaseServiceProvider_Dependencies(t *testing.T) {
