@@ -11,6 +11,11 @@ type FirebaseServiceProvider struct {
 	Config Config `config:"firebase"`
 }
 
+// NewFirebaseServiceProvider creates a new Firebase service provider.
+func NewFirebaseServiceProvider() *FirebaseServiceProvider {
+	return &FirebaseServiceProvider{}
+}
+
 // Name returns the name of the plugin.
 func (p *FirebaseServiceProvider) Name() string {
 	return "dg-firebase"
