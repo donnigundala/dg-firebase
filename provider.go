@@ -18,7 +18,7 @@ func NewFirebaseServiceProvider() *FirebaseServiceProvider {
 
 // Name returns the name of the plugin.
 func (p *FirebaseServiceProvider) Name() string {
-	return "dg-firebase"
+	return "firebase"
 }
 
 // Version returns the version of the plugin.
@@ -63,5 +63,13 @@ func (p *FirebaseServiceProvider) Register(app foundation.Application) error {
 func (p *FirebaseServiceProvider) Boot(app foundation.Application) error {
 	// Firebase will be resolved when needed
 	// No need to verify resolution here to avoid deadlock
+	return nil
+}
+
+// Shutdown gracefully stops the Firebase service.
+func (p *FirebaseServiceProvider) Shutdown(app foundation.Application) error {
+	// Firebase App doesn't require explicit shutdown generally,
+	// but we implement this to satisfy the ShutdownProvider interface
+	// and remain consistent with other plugins.
 	return nil
 }
