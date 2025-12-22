@@ -1,4 +1,4 @@
-package firebase
+package dgfirebase
 
 import (
 	"testing"
@@ -8,7 +8,7 @@ import (
 
 func TestFirebaseServiceProvider_Name(t *testing.T) {
 	provider := &FirebaseServiceProvider{}
-	assert.Equal(t, "dg-firebase", provider.Name())
+	assert.Equal(t, "firebase", provider.Name())
 }
 
 func TestFirebaseServiceProvider_Version(t *testing.T) {

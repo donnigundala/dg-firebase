@@ -30,6 +30,21 @@ firebase:
   credentials_json: "${FIREBASE_CREDENTIALS}"
 ```
 
+## Observability
+
+This plugin is instrumented with OpenTelemetry metrics. If `dg-observability` is registered and enabled, the following metrics are automatically emitted by the FCM client:
+
+*   `firebase.fcm.message.sent`: Counter (labels: `operation`, `type`, `status`)
+*   `firebase.fcm.message.duration`: Histogram (labels: `operation`, `type`, `status`)
+
+To enable observability, ensure the `dg-observability` plugin is registered and configured:
+
+```yaml
+observability:
+  enabled: true
+  service_name: "my-app"
+```
+
 ## Usage
 
 Register the provider in your application:

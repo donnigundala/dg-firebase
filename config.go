@@ -1,4 +1,4 @@
-package firebase
+package dgfirebase
 
 // Config holds the configuration for the Firebase provider.
 // Use either CredentialsFile OR CredentialsJSON, not both.

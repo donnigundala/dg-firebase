@@ -3,6 +3,7 @@ package fcm
 import (
 	"context"
 	"fmt"
+	"time"
 
 	firebase "firebase.google.com/go/v4"
 	"firebase.google.com/go/v4/messaging"
@@ -11,6 +12,7 @@ import (
 // Client wraps the Firebase Cloud Messaging client.
 type Client struct {
 	messaging *messaging.Client
+	obs       *observability
 }
 
 // NewClient creates a new FCM client from a Firebase app.
@@ -22,22 +24,36 @@ func NewClient(ctx context.Context, app *firebase.App) (*Client, error) {
 
 	return &Client{
 		messaging: messagingClient,
+		obs:       newObservability(),
 	}, nil
 }
 
 // Send sends a message to a single device.
 func (c *Client) Send(ctx context.Context, message *messaging.Message) (string, error) {
-	return c.messaging.Send(ctx, message)
+	start := time.Now()
+	res, err := c.messaging.Send(ctx, message)
+	c.obs.record(ctx, "send", "single", start, err, 1)
+	return res, err
 }
 
 // SendMulticast sends a message to multiple devices.
 func (c *Client) SendMulticast(ctx context.Context, message *messaging.MulticastMessage) (*messaging.BatchResponse, error) {
-	return c.messaging.SendMulticast(ctx, message)
+	start := time.Now()
+	res, err := c.messaging.SendMulticast(ctx, message)
+	count := int64(0)
+	if message != nil {
+		count = int64(len(message.Tokens))
+	}
+	c.obs.record(ctx, "send_multicast", "multicast", start, err, count)
+	return res, err
 }
 
 // SendAll sends multiple messages in a batch.
 func (c *Client) SendAll(ctx context.Context, messages []*messaging.Message) (*messaging.BatchResponse, error) {
-	return c.messaging.SendAll(ctx, messages)
+	start := time.Now()
+	res, err := c.messaging.SendAll(ctx, messages)
+	c.obs.record(ctx, "send_all", "batch", start, err, int64(len(messages)))
+	return res, err
 }
 
 // SubscribeToTopic subscribes tokens to a topic.

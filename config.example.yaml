@@ -1,0 +1,8 @@
+firebase:
+  # Path to the service account JSON file.
+  # Use either credentials_file OR credentials_json, not both.
+  credentials_file: "path/to/service-account.json"
+
+  # Raw JSON content of the service account.
+  # Useful for passing credentials via environment variables.
+  # credentials_json: '{"type": "service_account", ...}'
