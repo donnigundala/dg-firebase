@@ -10,24 +10,20 @@ go get github.com/donnigundala/dg-firebase
 
 ## Configuration
 
-Add the following to your `config/firebase.yaml` or `config/app.yaml`:
+The plugin uses the `firebase` key in your configuration file.
 
-### Option 1: Using a credentials file
+### Configuration Mapping (YAML vs ENV)
 
-```yaml
-firebase:
-  credentials_file: "path/to/service-account.json"
-```
+| YAML Key | Environment Variable | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `firebase.credentials_file` | - | - | Path to service account JSON |
+| `firebase.credentials_json` | `FIREBASE_CREDENTIALS` | - | Raw JSON string |
 
-### Option 2: Using raw JSON (via environment variable)
-
-```bash
-export FIREBASE_CREDENTIALS='{"type": "service_account", "project_id": "...", ...}'
-```
+### Example YAML
 
 ```yaml
 firebase:
-  credentials_json: "${FIREBASE_CREDENTIALS}"
+  credentials_file: "storage/firebase-auth.json"
 ```
 
 ## Observability
@@ -50,17 +46,32 @@ observability:
 Register the provider in your application:
 
 ```go
+package main
+
 import (
+    "github.com/donnigundala/dg-core/foundation"
     "github.com/donnigundala/dg-firebase"
 )
 
 func main() {
     app := foundation.New(".")
     
-    // Register Firebase provider
-    app.Register(&firebase.FirebaseServiceProvider{})
+    // Register Firebase provider (uses 'firebase' key in config)
+    app.Register(dgfirebase.NewFirebaseServiceProvider())
     
-    app.Boot()
+    app.Start()
+}
+```
+
+### Integration via InfrastructureSuite
+In your `bootstrap/app.go`, you typically use the declarative suite pattern:
+
+```go
+func InfrastructureSuite(workerMode bool) []foundation.ServiceProvider {
+	return []foundation.ServiceProvider{
+		dgfirebase.NewFirebaseServiceProvider(),
+		// ... other providers
+	}
 }
 ```
 
